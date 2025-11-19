@@ -32,7 +32,7 @@ public class AuthController {
         if (!ok) {
             return ResponseEntity.status(401).body("unauthorized");
         }
-        return ResponseEntity.ok("success!");
+        return ResponseEntity.ok(Map.of("message", "login success"));
     }
 
     // 디버그용. user를 잘 찾나 확인.
@@ -40,7 +40,6 @@ public class AuthController {
     public ResponseEntity<?> getUser(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken)
     {
         User user = userService.getUserFromAuthToken(authToken);
-
         return ResponseEntity
                 .status(200)
                 .body(user);

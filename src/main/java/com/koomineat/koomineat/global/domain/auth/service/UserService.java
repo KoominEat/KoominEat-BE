@@ -33,7 +33,7 @@ public class UserService {
         user = userRepository.save(user);
 
 
-        // set cookie 배포시에 수정해야 함.
+        // set cookie. 배포시에 수정해야 함.
         ResponseCookie cookie = ResponseCookie.from(COOKIE_NAME, token)
                 .httpOnly(true)
                 .secure(false)
@@ -53,7 +53,7 @@ public class UserService {
         return userRepository.findByAuthToken(tokenFromCookie).isPresent();
     }
     
-    // 디버깅용 user get 함수.
+    // authToken으로 user를 가져온다.
     public User getUserFromAuthToken(String authToken)
     {
         return userRepository.findByAuthToken(authToken).orElseThrow(() -> new RuntimeException("Invalid auth token"));
