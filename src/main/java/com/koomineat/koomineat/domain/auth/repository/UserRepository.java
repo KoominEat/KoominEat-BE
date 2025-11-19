@@ -1,6 +1,6 @@
-package com.koomineat.koomineat.global.domain.auth.repository;
+package com.koomineat.koomineat.domain.auth.repository;
 
-import com.koomineat.koomineat.global.domain.auth.entity.User;
+import com.koomineat.koomineat.domain.auth.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

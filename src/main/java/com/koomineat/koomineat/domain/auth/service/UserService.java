@@ -1,7 +1,7 @@
-package com.koomineat.koomineat.global.domain.auth.service;
+package com.koomineat.koomineat.domain.auth.service;
 
-import com.koomineat.koomineat.global.domain.auth.entity.User;
-import com.koomineat.koomineat.global.domain.auth.repository.UserRepository;
+import com.koomineat.koomineat.domain.auth.entity.User;
+import com.koomineat.koomineat.domain.auth.repository.UserRepository;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
