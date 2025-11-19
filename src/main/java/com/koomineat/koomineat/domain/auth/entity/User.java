@@ -1,4 +1,4 @@
-package com.koomineat.koomineat.global.domain.auth.entity;
+package com.koomineat.koomineat.domain.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

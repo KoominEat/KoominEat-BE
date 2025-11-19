@@ -1,7 +1,7 @@
-package com.koomineat.koomineat.global.domain.auth.controller;
+package com.koomineat.koomineat.domain.auth.controller;
 
-import com.koomineat.koomineat.global.domain.auth.entity.User;
-import com.koomineat.koomineat.global.domain.auth.service.UserService;
+import com.koomineat.koomineat.domain.auth.entity.User;
+import com.koomineat.koomineat.domain.auth.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
