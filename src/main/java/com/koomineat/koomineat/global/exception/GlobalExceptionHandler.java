@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.fail("INTERNAL_SERVER_ERROR", "서버 내부 오류입니다."));
+                .body(ApiResponse.fail("INTERNAL_SERVER_ERROR", e.getMessage()));
     }
 
 }
