@@ -8,6 +8,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -35,6 +37,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<OrderItem> orderItems = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -48,4 +54,9 @@ public class Order {
         this.totalPrice += price;
     }
 
+    public void addOrderItem(OrderItem item) {
+        this.orderItems.add(item);
+        item.setOrder(this);
+        this.addPrice(item.getPrice() * item.getQuantity());
+    }
 }
