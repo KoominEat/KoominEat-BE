@@ -1,6 +1,7 @@
 package com.koomineat.koomineat.domain.store.service;
 
 import com.koomineat.koomineat.domain.store.dto.response.MenuItemResponse;
+import com.koomineat.koomineat.domain.store.entity.MenuItem;
 import com.koomineat.koomineat.domain.store.repository.MenuItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,12 @@ public class MenuItemServiceImpl implements MenuItemService {
                 .stream()
                 .map(MenuItemResponse::from)
                 .toList();
+    }
+
+    // menuItem 객체를 id로 가져옴.
+    @Override
+    public MenuItem getMenuItemById(Long menuItemId)
+    {
+        return menuItemRepository.getById(menuItemId);
     }
 }

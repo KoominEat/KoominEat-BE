@@ -2,6 +2,7 @@ package com.koomineat.koomineat.domain.order.entity;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
 import com.koomineat.koomineat.domain.store.entity.Store;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,11 +24,12 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    private Long totalPrice;
+    private int totalPrice;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "ended_at", nullable = true)
     private LocalDateTime endedAt;
 
     @Enumerated(EnumType.STRING)
@@ -40,5 +42,10 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    public void addPrice(int price)
+    {
+        this.totalPrice += price;
+    }
 
 }
