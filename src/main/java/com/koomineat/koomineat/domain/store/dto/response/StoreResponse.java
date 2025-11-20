@@ -11,16 +11,12 @@ public class StoreResponse {
     private Long storeId;
     private String name;
     private String location;
-    private Double x;
-    private Double y;
 
-    public static StoreResponse from(Store s) {
+    public static StoreResponse from(Store store) {
         return StoreResponse.builder()
-                .storeId(s.getId())
-                .name(s.getName())
-                .location(s.getLocation())
-                .x(s.getX())
-                .y(s.getY())
+                .storeId(store.getId())
+                .name(store.getName())
+                .location(store.getLocation())
                 .build();
     }
 }
