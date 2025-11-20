@@ -13,13 +13,13 @@ public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;      // "예술관 카페", "카페미르"
-    private String location;  // "예술관", "공학관"
-
-    private Double x; // 지도좌표 0~1
-    private Double y;
+    @Column(nullable = false)
+    private String name;  // 매장명
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private StoreCategory category;
+
+    @Column(nullable = false)
+    private String location; // 건물명 등 텍스트 위치 정보
 }

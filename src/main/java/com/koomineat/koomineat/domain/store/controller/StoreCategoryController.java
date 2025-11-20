@@ -20,30 +20,24 @@ public class StoreCategoryController {
     private final StoreCategoryService storeCategoryService;
 
     @Operation(
-            summary = "스토어 카테고리 조회",
+            summary = "스토어 카테고리 전체 조회",
             description = """
                 ### 기능 설명
-                - 서비스에서 제공하는 스토어 분류(Category)를 모두 조회합니다.
-                - 예: 커피 / 버거 / 디저트 / 한식 / 분식 등
+                - 전체 스토어 카테고리 목록을 조회합니다.
+                - 커피 / 버거 / 분식 / 디저트 등
 
-                ### 제약조건
-                - 없음 (쿼리 파라미터 불필요)
-
+                ---
                 ### 성공 응답 예시
                 ```json
                 {
                   "code": "SUCCESS",
-                  "message": "요청이 성공적으로 처리되었습니다.",
+                  "message": "ok",
                   "data": [
                     {"categoryId": 1, "name": "커피"},
                     {"categoryId": 2, "name": "버거"}
                   ]
                 }
                 ```
-
-                ### 테스트 방법
-                1. Swagger -> GET `/store-categories`
-                2. 카테고리 목록 배열 확인
                 """
     )
     @ApiResponses({
@@ -55,7 +49,7 @@ public class StoreCategoryController {
                             examples = @ExampleObject("""
                             {
                               "code": "SUCCESS",
-                              "message": "요청이 성공적으로 처리되었습니다.",
+                              "message": "ok",
                               "data": [
                                 {"categoryId": 1, "name": "커피"},
                                 {"categoryId": 2, "name": "버거"}

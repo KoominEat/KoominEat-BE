@@ -10,14 +10,16 @@ import lombok.*;
 @Builder
 public class MenuItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;   // 아메리카노
-    private Integer price; // 4500
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
+    @JoinColumn(name = "store_id", nullable = false)
     private Store store;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private int price;
 }
