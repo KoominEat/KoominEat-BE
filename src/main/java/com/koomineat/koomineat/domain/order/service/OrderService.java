@@ -131,13 +131,17 @@ public class OrderService {
     }
 
     // user의 order 중 status가 FINISHED 상태인 것들만 가져온다.
-    public List<OrderResponse> getFinishedOrders(String authToken)
+    // 수정: preparing과 finished만.
+    public List<OrderResponse> getOrders(String authToken)
     {
         User user = userService.getUserFromAuthToken(authToken);
+        List<Order> orders =
+                orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PREPARING);
         List<Order> finishedOrders =
                 orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.FINISHED);
 
-        return finishedOrders.stream()
+        orders.addAll(finishedOrders);
+        return orders.stream()
                 .map(OrderResponse::from)
                 .toList();
     }
