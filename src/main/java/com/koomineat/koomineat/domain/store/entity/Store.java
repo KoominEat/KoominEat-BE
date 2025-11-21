@@ -9,24 +9,18 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Store {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;  // 매장명
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private StoreCategory category;
 
-    @Column(nullable = false)
-    private String location; // 건물명 등 텍스트 위치 정보
-
-    // 프로필 이미지
-    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
-    private String image;
-    
-    // 배경화면 이미지
-    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
-    private String backgroundImage;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private StoreLocation location;
 }

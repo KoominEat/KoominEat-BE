@@ -104,10 +104,23 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     // 전달 요청 리스트
     @Override
-    public List<DeliveryListResponse> getRequestList() {
-        return deliveryRepository
-                .findByStatusOrderByOrderCreatedAtAsc(DeliveryStatus.READY)
-                .stream()
+    public List<DeliveryListResponse> getRequestList(Long locationId) {
+
+        List<Delivery> list;
+
+        if (locationId == null) {
+            // 전체 조회
+            list = deliveryRepository
+                    .findByStatusOrderByOrderCreatedAtAsc(DeliveryStatus.READY);
+        } else {
+            // 특정 위치(locationId)만 조회
+            list = deliveryRepository
+                    .findByStatusAndOrderStoreLocationIdOrderByOrderCreatedAtAsc(
+                            DeliveryStatus.READY, locationId
+                    );
+        }
+
+        return list.stream()
                 .map(DeliveryListResponse::from)
                 .toList();
     }

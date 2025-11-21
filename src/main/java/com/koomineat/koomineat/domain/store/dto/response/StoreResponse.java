@@ -1,51 +1,35 @@
 package com.koomineat.koomineat.domain.store.dto.response;
 
-import com.koomineat.koomineat.domain.store.entity.MenuItem;
 import com.koomineat.koomineat.domain.store.entity.Store;
-import com.koomineat.koomineat.global.response.BaseImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
-@NoArgsConstructor
+@Builder
 @Schema(description = "스토어 정보 응답 DTO")
-public class StoreResponse extends BaseImageResponse<StoreResponse> {
+public class StoreResponse {
 
-    @Schema(description = "스토어 ID", example = "1")
     private Long storeId;
-
-    @Schema(description = "스토어 이름", example = "예술관 카페")
     private String name;
 
-    @Schema(description = "스토어 위치(건물 이름)", example = "예술관")
-    private String location;
+    @Schema(description = "위치 ID", example = "3")
+    private Long locationId;
 
-    private String backgroundImage;
+    @Schema(description = "위치 이름", example = "예술관")
+    private String locationName;
 
-    @Override
-    protected StoreResponse addBaseUrl(String baseUrl) {
-        super.addBaseUrl(baseUrl);
-        if (backgroundImage != null && !backgroundImage.isBlank()) {
-            backgroundImage = baseUrl + backgroundImage;
-        }
-        return this;
-    }
+    private Long categoryId;
+    private String categoryName;
 
-    public static StoreResponse from(Store store) {
+    public static StoreResponse from(Store s) {
         return StoreResponse.builder()
-                .storeId(store.getId())
-                .name(store.getName())
-                .location(store.getLocation())
-                .image(store.getImage())
-                .backgroundImage(store.getBackgroundImage())
+                .storeId(s.getId())
+                .name(s.getName())
+                .locationId(s.getLocation().getId())
+                .locationName(s.getLocation().getName())
+                .categoryId(s.getCategory().getId())
+                .categoryName(s.getCategory().getName())
                 .build();
-    }
-
-    public static StoreResponse from(Store store, String baseUrl) {
-        return StoreResponse.from(store).addBaseUrl(baseUrl);
     }
 }

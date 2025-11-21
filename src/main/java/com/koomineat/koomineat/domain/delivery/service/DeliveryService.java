@@ -14,7 +14,9 @@ public interface DeliveryService {
 
     Delivery finishDelivery(Long deliveryId);
 
-    List<DeliveryListResponse> getRequestList();
+    List<DeliveryListResponse> getRequestList(Long locationId);
+
     List<DeliveryListResponse> getMyAcceptedList(String authToken);
+
     List<DeliveryListResponse> getMyDeliveryRequests(String authToken);
 }

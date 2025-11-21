@@ -5,8 +5,6 @@ import com.koomineat.koomineat.domain.store.entity.Store;
 import com.koomineat.koomineat.domain.store.repository.StoreRepository;
 import com.koomineat.koomineat.global.exception.ErrorCode;
 import com.koomineat.koomineat.global.exception.KookminEatException;
-import com.koomineat.koomineat.global.util.BaseUrlManager;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +17,17 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
 
     @Override
-    public List<StoreResponse> getByCategory(Long categoryId, HttpServletRequest request) {
-        return storeRepository.findByCategoryId(categoryId)
-                .stream()
-                .map(s -> StoreResponse.from(s, BaseUrlManager.getBaseUrl(request)))
-                .toList();
+    public List<StoreResponse> getStores(Long categoryId, Long locationId) {
+
+        List<Store> stores;
+
+        if (locationId == null) {
+            stores = storeRepository.findByCategoryId(categoryId);
+        } else {
+            stores = storeRepository.findByCategoryIdAndLocationId(categoryId, locationId);
+        }
+
+        return stores.stream().map(StoreResponse::from).toList();
     }
 
     @Override

@@ -13,4 +13,8 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     List<Delivery> findByDeliveryUserIdOrderByOrderCreatedAtAsc(Long userId);
 
     List<Delivery> findByOrderUserIdOrderByOrderCreatedAtAsc(Long userId);
+
+    List<Delivery> findByStatusAndOrderStoreLocationIdOrderByOrderCreatedAtAsc(
+            DeliveryStatus status, Long locationId
+    );
 }

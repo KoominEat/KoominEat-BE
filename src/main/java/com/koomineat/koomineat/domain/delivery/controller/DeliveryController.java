@@ -17,74 +17,67 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-    // 1. 전달 요청 전체 리스트 조회
+    // 1. 전달 요청 전체 리스트 조회 (location 필터링)
     @Operation(
-            summary = "전달 요청 전체 조회 (READY 상태)",
+            summary = "전달 요청 전체 조회 (READY 상태, location 필터링 가능)",
             description = """
-            ### 기능 설명
-            - 현재 전달자가 수락을 기다리고 있는 **전달 요청(Delivery)** 리스트를 조회합니다.
-            - 상태가 `READY`인 전달만 반환합니다.
-            - 최신 주문순 정렬.
+        ### 기능 설명
+        - 현재 다른 사용자들이 요청한 **전달 요청(Delivery)** 중  
+          **아직 전달자가 수락하지 않은 READY 상태의 요청들만 조회**합니다.
+        - 전달 요청은 *사용자가 직접 입력한 배달 위치(destination)* 가 아니라,  
+          **주문한 매장의 건물(StoreLocation)** 기준으로 필터링됩니다.
+        - 즉, "예술관에서 주문된 전달만 보고 싶어요" 같은 기능이 가능합니다.
 
-            ---
+        ### 제약조건
+        - 인증 불필요 (누구나 전달 요청 목록을 볼 수 있음)
+        - 상태는 무조건 `READY`만 조회
 
-            ### 반환 정보
-            - deliveryId
-            - order 정보 (OrderResponse)
-            - 요청자(user)의 정보(UserResponse)
-            - status (READY)
-            - destination
-            - message
-            - estimatedTime (예상 완료 시간)
+        ---
 
-            ---
+        ### 예외 상황 (에러코드)
+        - 본 API는 단순 조회 API로 **에러 없음**
+        - 가게나 위치가 없으면 simply 빈 배열([]) 반환
 
-            ### 제약 조건
-            - 인증 불필요 (전달 목록은 전체 공개)
-            - READY 상태만 조회
+        ---
 
-            ---
-
-            ### 예외 코드 / 에러 상황
-            - 없음 (빈 리스트 반환 가능)
-
-            ---
-
-            ### 성공 응답 예시
-            ```json
+        ### 성공 응답 예시
+        ```json
+        {
+          "code": "SUCCESS",
+          "message": "ok",
+          "data": [
             {
-              "code": "SUCCESS",
-              "message": "ok",
-              "data": [
-                {
-                  "deliveryId": 5,
-                  "status": "READY",
-                  "estimatedTime": 3,
-                  "destination": "예술관 402호",
-                  "message": "빠르게 부탁드립니다!",
-                  "order": {
-                    "orderId": 12,
-                    "orderType": "DELIVERY",
-                    "createdAt": "2025-11-21T03:40:00"
-                  },
-                  "user": {
-                    "userId": 7,
-                    "nickname": "철수"
-                  }
-                }
-              ]
+              "deliveryId": 5,
+              "status": "READY",
+              "estimatedTime": 3,
+              "destination": "예술관 402호",
+              "message": "빠르게 부탁드립니다!",
+              "order": {
+                "orderId": 12,
+                "orderType": "DELIVERY",
+                "createdAt": "2025-11-21T03:40:00"
+              },
+              "deliveryUser": null
             }
-            ```
+          ]
+        }
+        ```
 
-            ### 테스트 방법
-            1. 주문 생성 API에서 orderType=DELIVERY로 생성
-            2. Swagger → GET `/delivery/requests`
-            3. READY 상태 전달 목록이 보이는지 확인
-            """
+        ---
+
+        ### 테스트 방법
+        1. 주문 생성 API에서 `orderType=DELIVERY` 로 주문 생성
+        2. 주문 생성 시 연결된 Delivery 상태는 자동으로 `READY`
+        3. Swagger에서 GET `/delivery/requests` 요청
+        4. locationId 없이 호출 → 전체 READY 전달 조회
+        5. locationId=1 같은 값 넣고 호출 → 해당 위치에서 주문된 전달만 조회되는지 확인
+        """
     )
     @GetMapping("/requests")
-    public ApiResponse<List<DeliveryListResponse>> getRequests() {
-        return ApiResponse.success(deliveryService.getRequestList());
+    public ApiResponse<List<DeliveryListResponse>> getRequests(
+            @RequestParam(required = false) Long locationId
+    ) {
+        return ApiResponse.success(deliveryService.getRequestList(locationId));
     }
 
     // 2. 내가 수락한 전달 목록 조회
