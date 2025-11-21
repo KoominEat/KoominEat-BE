@@ -2,6 +2,7 @@ package com.koomineat.koomineat.domain.delivery.service;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
 import com.koomineat.koomineat.domain.auth.service.UserService;
+import com.koomineat.koomineat.domain.delivery.dto.response.DeliveryListResponse;
 import com.koomineat.koomineat.domain.delivery.entity.Delivery;
 import com.koomineat.koomineat.domain.delivery.entity.DeliveryStatus;
 import com.koomineat.koomineat.domain.delivery.repository.DeliveryRepository;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
     private final UserService userService;
+
+    private static final int DELIVERY_TIMEOUT_MINUTES = 3;
 
     @Override
     @Transactional
@@ -31,8 +35,8 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .destination(destination)
                 .message(message)
                 .status(DeliveryStatus.READY)
+                .estimatedTime(null)
                 .build();
-
         return deliveryRepository.save(delivery);
     }
 
@@ -40,52 +44,38 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional
     public Delivery acceptDelivery(String authToken, Long deliveryId) {
 
-        // 1. 전달 요청 조회
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.DELIVERY_NOT_FOUND));
 
         Order order = delivery.getOrder();
 
-        // 2. 유저 조회 (쿠키 기반)
         User user = userService.getUserFromAuthToken(authToken);
 
-        // 3. 상태에 따른 방어 로직들
-
-        // 이미 완료된 전달이면 수락 불가
+        // 이미 끝난 배달이면 수락 불가
         if (delivery.getStatus() == DeliveryStatus.FINISHED) {
             throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_FINISHED);
         }
 
-        // 이미 취소된 전달이면 수락 불가
         if (delivery.getStatus() == DeliveryStatus.CANCELED) {
             throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_CANCELED);
         }
 
-        // 이미 누군가 DELIVERING 상태로 수락한 전달이면, 중복 수락 방지
-        if (delivery.getStatus() == DeliveryStatus.DELIVERING) {
-            // 다른 사람이 이미 잡은 경우
-            if (delivery.getDeliveryUser() != null
-                    && !delivery.getDeliveryUser().getId().equals(user.getId())) {
-                throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_ACCEPTED);
-            }
-            // 같은 유저가 다시 호출하면 그냥 현재 상태 그대로 반환
-            return delivery;
+        // 이미 누가 잡았으면 거부
+        if (delivery.getStatus() == DeliveryStatus.DELIVERING &&
+                delivery.getDeliveryUser() != null &&
+                !delivery.getDeliveryUser().getId().equals(user.getId())) {
+
+            throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_ACCEPTED);
         }
 
-        // 4. 수락 가능 시간(예: 생성 후 1분) 초과 체크
-        if (order.getCreatedAt().plusMinutes(1).isBefore(LocalDateTime.now())) {
-            // 시간 초과 → 자동 PICKUP 전환 + 전달 취소
-            // changeOrderType으로 자동으로 Finished로 전환.
-            order.updateOrderType(OrderType.PICKUP);
+        // 수락 가능 시간 초과 검사
+        if (order.getCreatedAt().plusMinutes(DELIVERY_TIMEOUT_MINUTES).isBefore(LocalDateTime.now())) {
             delivery.updateStatus(DeliveryStatus.CANCELED);
-            // 여기서는 에러로 던지지 않고, "취소된 상태" 그대로 반환
-            // (프론트에서 status 보고 '시간 초과로 자동 취소' 같은 메시지 띄울 수 있음)
+            order.updateOrderType(OrderType.PICKUP);
             return delivery;
-            // 만약 여기서 D003(DELIVERY_TIMEOUT)을 쓰고 싶다면:
-            // throw new KookminEatException(ErrorCode.DELIVERY_TIMEOUT);
         }
 
-        // 5. 정상 수락 처리
+        // 정상 수락
         delivery.updateDeliveryUser(user);
         delivery.updateStatus(DeliveryStatus.DELIVERING);
 
@@ -99,20 +89,50 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.DELIVERY_NOT_FOUND));
 
-        // 이미 취소된 요청이면 완료 처리 불가
-        if (delivery.getStatus() == DeliveryStatus.CANCELED) {
+        if (delivery.getStatus() == DeliveryStatus.CANCELED)
             throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_CANCELED);
-        }
 
-        // 이미 완료된 요청이면 중복 완료 방지
-        if (delivery.getStatus() == DeliveryStatus.FINISHED) {
+        if (delivery.getStatus() == DeliveryStatus.FINISHED)
             throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_FINISHED);
-        }
 
-        // 정상 완료 처리
         delivery.updateStatus(DeliveryStatus.FINISHED);
+
         delivery.getOrder().setStatus(OrderStatus.FINISHED);
 
         return delivery;
+    }
+
+    // 전달 요청 리스트
+    @Override
+    public List<DeliveryListResponse> getRequestList() {
+        return deliveryRepository
+                .findByStatusOrderByOrderCreatedAtAsc(DeliveryStatus.READY)
+                .stream()
+                .map(DeliveryListResponse::from)
+                .toList();
+    }
+
+    // 내가 수락한 전달 목록
+    @Override
+    public List<DeliveryListResponse> getMyAcceptedList(String authToken) {
+        User me = userService.getUserFromAuthToken(authToken);
+
+        return deliveryRepository
+                .findByDeliveryUserIdOrderByOrderCreatedAtAsc(me.getId())
+                .stream()
+                .map(DeliveryListResponse::from)
+                .toList();
+    }
+
+    // 내가 요청한 배달 정보
+    @Override
+    public List<DeliveryListResponse> getMyDeliveryRequests(String authToken) {
+        User me = userService.getUserFromAuthToken(authToken);
+
+        return deliveryRepository
+                .findByOrderUserIdOrderByOrderCreatedAtAsc(me.getId())
+                .stream()
+                .map(DeliveryListResponse::from)
+                .toList();
     }
 }
