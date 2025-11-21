@@ -40,6 +40,8 @@ public class StoreResponse extends BaseImageResponse<StoreResponse> {
                 .storeId(store.getId())
                 .name(store.getName())
                 .location(store.getLocation())
+                .image(store.getImage())
+                .backgroundImage(store.getBackgroundImage())
                 .build();
     }
 

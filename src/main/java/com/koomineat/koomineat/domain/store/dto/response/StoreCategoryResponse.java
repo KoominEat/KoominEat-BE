@@ -24,6 +24,7 @@ public class StoreCategoryResponse extends BaseImageResponse<StoreCategoryRespon
         return StoreCategoryResponse.builder()
                 .categoryId(c.getId())
                 .name(c.getName())
+                .image(c.getImage())
                 .build();
     }
 
