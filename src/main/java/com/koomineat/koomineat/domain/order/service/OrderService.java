@@ -16,6 +16,8 @@ import com.koomineat.koomineat.domain.store.service.StoreService;
 import com.koomineat.koomineat.domain.delivery.service.DeliveryService;
 import com.koomineat.koomineat.global.exception.ErrorCode;
 import com.koomineat.koomineat.global.exception.KookminEatException;
+import com.koomineat.koomineat.global.util.BaseUrlManager;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,8 +59,9 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse makeOrder(String authToken, OrderRequest orderRequest)
+    public OrderResponse makeOrder(String authToken, OrderRequest orderRequest, HttpServletRequest request)
     {
+
         // user.
         User user = userService.getUserFromAuthToken(authToken);
 
@@ -109,30 +112,30 @@ public class OrderService {
         user.addOrder(order);
         order = orderRepository.save(order);
 
-        return OrderResponse.from(order);
+        return OrderResponse.from(order, BaseUrlManager.getBaseUrl(request));
     }
 
     // 권한 필요
-    public OrderResponse cancelOrder(String authToken, Long orderId)
+    public OrderResponse cancelOrder(String authToken, Long orderId, HttpServletRequest request)
     {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
         checkAccessAuthority(user, order);
         order.setStatus(OrderStatus.CANCELED);
-        return OrderResponse.from(order);
+        return OrderResponse.from(order, BaseUrlManager.getBaseUrl(request));
     }
 
     // 권한 필요.
-    public OrderResponse getOrder(String authToken, Long orderId)
+    public OrderResponse getOrder(String authToken, Long orderId, HttpServletRequest request)
     {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
-        return OrderResponse.from(order);
+        return OrderResponse.from(order, BaseUrlManager.getBaseUrl(request));
     }
 
     // user의 order 중 status가 FINISHED 상태인 것들만 가져온다.
     // 수정: preparing과 finished만.
-    public List<OrderResponse> getOrders(String authToken)
+    public List<OrderResponse> getOrders(String authToken, HttpServletRequest request)
     {
         User user = userService.getUserFromAuthToken(authToken);
         List<Order> orders =
@@ -142,13 +145,13 @@ public class OrderService {
 
         orders.addAll(finishedOrders);
         return orders.stream()
-                .map(OrderResponse::from)
+                .map(od -> OrderResponse.from(od, BaseUrlManager.getBaseUrl(request)))
                 .toList();
     }
 
     // order를 finished로 만든다.
     // 권한 필요
-    public OrderResponse finishOrder(String authToken, Long orderId)
+    public OrderResponse finishOrder(String authToken, Long orderId, HttpServletRequest request)
     {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
@@ -156,6 +159,6 @@ public class OrderService {
         checkAccessAuthority(user, order);
         // set order to finished
         order.finish();
-        return OrderResponse.from(order);
+        return OrderResponse.from(order, BaseUrlManager.getBaseUrl(request));
     }
 }
