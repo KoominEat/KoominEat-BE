@@ -36,6 +36,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOriginPatterns(List.of("*"));  // 모든 도메인 허용
+        config.setAllowedOrigins(List.of("koomineat.shop"));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);   // 쿠키 허용
