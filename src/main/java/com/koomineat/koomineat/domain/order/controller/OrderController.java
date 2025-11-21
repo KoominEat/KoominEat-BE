@@ -106,10 +106,10 @@ public class OrderController {
     ]
 }
      */
-    @GetMapping("/finished")
+    @GetMapping
     public ApiResponse<List<OrderResponse>> getFinishedOrders(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken)
     {
-        return ApiResponse.success(orderService.getFinishedOrders(authToken));
+        return ApiResponse.success(orderService.getOrders(authToken));
     }
 
     // 해당 Order를 완료 상태로 만든다. (필요 없을수도 있음.)
