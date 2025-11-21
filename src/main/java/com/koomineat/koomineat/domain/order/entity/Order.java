@@ -2,7 +2,6 @@ package com.koomineat.koomineat.domain.order.entity;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
 import com.koomineat.koomineat.domain.store.entity.Store;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
