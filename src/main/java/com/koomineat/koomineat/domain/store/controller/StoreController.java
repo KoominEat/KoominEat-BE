@@ -88,7 +88,7 @@ public class StoreController {
     )
     @GetMapping
     public ApiResponse<List<StoreResponse>> getStores(
-            @RequestParam Long categoryId,
+            @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) Long locationId
     ) {
         return ApiResponse.success(storeService.getStores(categoryId, locationId));
