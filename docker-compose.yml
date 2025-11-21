@@ -31,6 +31,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    # static 마운트 설정.
+    volumes:
+      - ./static:/static:rw
+
 
 volumes:
   db-data:
