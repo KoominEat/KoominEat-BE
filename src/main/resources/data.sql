@@ -10,7 +10,7 @@ INSERT INTO store_category (name, image) VALUES
 ------------------------
 -- location 등록
 
-INSERT INTO store_location (name) VALUES
+INSERT INTO location (name) VALUES
                                 ('본부관'),
                                 ('북악관'),
                                 ('법학관'),

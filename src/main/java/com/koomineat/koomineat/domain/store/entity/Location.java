@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class StoreLocation {
+public class Location {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
