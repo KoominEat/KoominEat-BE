@@ -9,5 +9,4 @@ public class KoominEatApplication {
     public static void main(String[] args) {
         SpringApplication.run(KoominEatApplication.class, args);
     }
-
 }
