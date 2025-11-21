@@ -93,7 +93,7 @@ public class OrderService {
         // 만약 OrderType이 Pickup이라면 바로 Finish.
         if(order.getOrderType() == OrderType.PICKUP)
         {
-            order.setStatus(OrderStatus.FINISHED);
+            order.finishOrder();
         }
         else if(order.getOrderType() == OrderType.DELIVERY)
         {
@@ -152,7 +152,7 @@ public class OrderService {
 
         checkAccessAuthority(user, order);
         // set order to finished
-        order.setStatus(OrderStatus.FINISHED);
+        order.finishOrder();
         return OrderResponse.from(order);
     }
 }
