@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 @RequiredArgsConstructor
@@ -141,6 +142,11 @@ public class OrderService {
                 orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.FINISHED);
 
         orders.addAll(finishedOrders);
+
+        // Delivery 정렬 기준과 동일하게 정렬
+        orders.sort(Comparator.comparing(Order::getCreatedAt));
+
+        // 변환 후 반환
         return orders.stream()
                 .map(OrderResponse::from)
                 .toList();

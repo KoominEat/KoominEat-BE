@@ -32,11 +32,18 @@ public class Delivery {
 
     private String message;
 
+    @Column(nullable = true)
+    private Integer estimatedTime;
+
     public void updateStatus(DeliveryStatus status) {
         this.status = status;
     }
 
     public void updateDeliveryUser(User user) {
         this.deliveryUser = user;
+    }
+
+    public void updateEstimatedTime(Integer estimatedTime) {
+        this.estimatedTime = estimatedTime;
     }
 }
