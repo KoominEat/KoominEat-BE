@@ -1,11 +1,9 @@
 package com.koomineat.koomineat.domain.order.service;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
-import com.koomineat.koomineat.domain.auth.repository.UserRepository;
 import com.koomineat.koomineat.domain.auth.service.UserService;
 import com.koomineat.koomineat.domain.order.dto.request.OrderItemRequest;
 import com.koomineat.koomineat.domain.order.dto.request.OrderRequest;
-import com.koomineat.koomineat.domain.order.dto.response.OrderItemResponse;
 import com.koomineat.koomineat.domain.order.dto.response.OrderResponse;
 import com.koomineat.koomineat.domain.order.entity.Order;
 import com.koomineat.koomineat.domain.order.entity.OrderItem;
@@ -14,7 +12,6 @@ import com.koomineat.koomineat.domain.order.entity.OrderType;
 import com.koomineat.koomineat.domain.order.repository.OrderItemRepository;
 import com.koomineat.koomineat.domain.order.repository.OrderRepository;
 import com.koomineat.koomineat.domain.store.entity.MenuItem;
-import com.koomineat.koomineat.domain.store.repository.MenuItemRepository;
 import com.koomineat.koomineat.domain.store.service.MenuItemService;
 import com.koomineat.koomineat.domain.store.service.StoreService;
 import com.koomineat.koomineat.domain.delivery.service.DeliveryService;
