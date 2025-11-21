@@ -1,15 +1,11 @@
 package com.koomineat.koomineat.domain.order.dto.response;
 
 import com.koomineat.koomineat.domain.order.entity.Order;
-import com.koomineat.koomineat.domain.order.entity.OrderItem;
 import com.koomineat.koomineat.domain.order.entity.OrderStatus;
 import com.koomineat.koomineat.domain.order.entity.OrderType;
-import com.koomineat.koomineat.domain.store.dto.response.MenuItemResponse;
 import com.koomineat.koomineat.domain.store.dto.response.StoreResponse;
-import com.koomineat.koomineat.domain.store.entity.Store;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.awt.*;
 import java.util.List;

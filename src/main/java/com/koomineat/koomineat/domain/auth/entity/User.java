@@ -1,7 +1,6 @@
 package com.koomineat.koomineat.domain.auth.entity;
 
 import com.koomineat.koomineat.domain.order.entity.Order;
-import com.koomineat.koomineat.domain.order.entity.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
 
