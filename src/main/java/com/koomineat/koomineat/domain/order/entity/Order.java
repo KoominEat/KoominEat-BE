@@ -58,4 +58,14 @@ public class Order {
         item.setOrder(this);
         this.addPrice(item.getPrice() * item.getQuantity());
     }
+
+    // order type 바꿀 시 사용.
+    public void changeOrderType(OrderType orderType) {
+        this.orderType = orderType;
+
+        if (orderType == OrderType.PICKUP) {
+            this.status = OrderStatus.FINISHED;
+            this.endedAt = LocalDateTime.now();
+        }
+    }
 }
