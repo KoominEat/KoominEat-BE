@@ -35,7 +35,6 @@ public class StoreServiceImpl implements StoreService {
                         .reduce(cb::and)
                         .orElse(null);
 
-
         List<Store> stores = storeRepository.findAll(spec);
 
         return stores.stream().map(s -> StoreResponse.from(s, BaseUrlManager.getBaseUrl(request))).toList();

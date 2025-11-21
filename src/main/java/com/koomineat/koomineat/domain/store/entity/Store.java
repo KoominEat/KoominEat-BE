@@ -22,7 +22,7 @@ public class Store {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
-    private StoreLocation location;
+    private Location location;
 
     // 프로필 이미지
     @Column(nullable = false, columnDefinition = "varchar(255) default ''")
