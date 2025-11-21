@@ -75,7 +75,8 @@ public class DeliveryServiceImpl implements DeliveryService {
         // 4. 수락 가능 시간(예: 생성 후 1분) 초과 체크
         if (order.getCreatedAt().plusMinutes(1).isBefore(LocalDateTime.now())) {
             // 시간 초과 → 자동 PICKUP 전환 + 전달 취소
-            order.setOrderType(OrderType.PICKUP);
+            // changeOrderType으로 자동으로 Finished로 전환.
+            order.updateOrderType(OrderType.PICKUP);
             delivery.updateStatus(DeliveryStatus.CANCELED);
             // 여기서는 에러로 던지지 않고, "취소된 상태" 그대로 반환
             // (프론트에서 status 보고 '시간 초과로 자동 취소' 같은 메시지 띄울 수 있음)

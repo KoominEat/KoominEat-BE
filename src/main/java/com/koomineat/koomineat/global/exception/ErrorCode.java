@@ -24,6 +24,8 @@ public enum ErrorCode {
 
     // ===== order =====
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "O001", "주문을 찾을 수 없습니다."),
+    PENDING_ORDER_ALREADY_EXISTS(HttpStatus.CONFLICT, "O002", "이미 진행중인 주문이 있습니다."),
+    ORDER_ACCESS_DENIED(HttpStatus.FORBIDDEN, "O003", "주문에 접근할 권한이 없습니다."),
 
     // ===== delivery =====
     DELIVERY_NOT_FOUND(HttpStatus.NOT_FOUND, "D001", "전달 요청을 찾을 수 없습니다."),

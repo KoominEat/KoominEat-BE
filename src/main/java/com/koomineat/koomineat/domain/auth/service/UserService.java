@@ -2,6 +2,8 @@ package com.koomineat.koomineat.domain.auth.service;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
 import com.koomineat.koomineat.domain.auth.repository.UserRepository;
+import com.koomineat.koomineat.global.exception.ErrorCode;
+import com.koomineat.koomineat.global.exception.KookminEatException;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,6 @@ public class UserService {
     private boolean isProd() {
         return List.of(env.getActiveProfiles()).contains("prod");
     }
-
 
     @Transactional
     public User registerAndIssueCookie(String name, HttpServletResponse response) {
@@ -56,17 +57,16 @@ public class UserService {
         return user;
     }
 
-    // 그냥 user만 있다면 return true.
     @Transactional(readOnly = true)
-    public boolean authenticateByCookie(String tokenFromCookie) {
-        if (tokenFromCookie == null || tokenFromCookie.isBlank()) return false;
-        return userRepository.findByAuthToken(tokenFromCookie).isPresent();
+    public boolean authenticateByCookie(String authToken) {
+        if (authToken == null || authToken.isBlank()) return false;
+        return userRepository.findByAuthToken(authToken).isPresent();
     }
     
     // authToken으로 user를 가져온다.
     public User getUserFromAuthToken(String authToken)
     {
-        return userRepository.findByAuthToken(authToken).orElseThrow(() -> new RuntimeException("Invalid auth token"));
+        return userRepository.findByAuthToken(authToken).orElseThrow(() -> new KookminEatException(ErrorCode.INVALID_AUTH_TOKEN));
     }
 
 
