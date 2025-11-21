@@ -9,7 +9,6 @@ import com.koomineat.koomineat.domain.order.entity.Order;
 import com.koomineat.koomineat.domain.order.entity.OrderItem;
 import com.koomineat.koomineat.domain.order.entity.OrderStatus;
 import com.koomineat.koomineat.domain.order.entity.OrderType;
-import com.koomineat.koomineat.domain.order.repository.OrderItemRepository;
 import com.koomineat.koomineat.domain.order.repository.OrderRepository;
 import com.koomineat.koomineat.domain.store.entity.MenuItem;
 import com.koomineat.koomineat.domain.store.service.MenuItemService;
@@ -93,7 +92,7 @@ public class OrderService {
         // 만약 OrderType이 Pickup이라면 바로 Finish.
         if(order.getOrderType() == OrderType.PICKUP)
         {
-            order.finishOrder();
+            order.finish();
         }
         else if(order.getOrderType() == OrderType.DELIVERY)
         {
@@ -152,7 +151,7 @@ public class OrderService {
 
         checkAccessAuthority(user, order);
         // set order to finished
-        order.finishOrder();
+        order.finish();
         return OrderResponse.from(order);
     }
 }

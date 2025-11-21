@@ -60,7 +60,7 @@ public class Order {
     }
 
     // order 끝내기
-    public void finishOrder()
+    public void finish()
     {
         this.status = OrderStatus.FINISHED;
         this.endedAt = LocalDateTime.now();
@@ -71,7 +71,7 @@ public class Order {
         this.orderType = orderType;
 
         if (orderType == OrderType.PICKUP) {
-            finishOrder();
+            finish();
         }
     }
 }
