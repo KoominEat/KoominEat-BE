@@ -28,10 +28,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken) {
-        boolean ok = userService.authenticateByCookie(authToken);
-        if (!ok) {
-            return ResponseEntity.status(401).body("unauthorized");
-        }
+        // 여기서 user를 못찾으면 ErrorCode 발생.
+        User user = userService.getUserFromAuthToken(authToken);
         return ResponseEntity.ok(Map.of("message", "login success"));
     }
 

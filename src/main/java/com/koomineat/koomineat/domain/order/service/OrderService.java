@@ -15,6 +15,8 @@ import com.koomineat.koomineat.domain.store.entity.MenuItem;
 import com.koomineat.koomineat.domain.store.service.MenuItemService;
 import com.koomineat.koomineat.domain.store.service.StoreService;
 import com.koomineat.koomineat.domain.delivery.service.DeliveryService;
+import com.koomineat.koomineat.global.exception.ErrorCode;
+import com.koomineat.koomineat.global.exception.KookminEatException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
 
     private final UserService userService;
     private final MenuItemService menuItemService;
@@ -33,11 +34,40 @@ public class OrderService {
 
     private final DeliveryService deliveryService;
 
+    // order를 Id로 찾는다. (에러 처리 적용)
+    private Order findByOrderId(Long orderId)
+    {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new KookminEatException(ErrorCode.ORDER_NOT_FOUND));
+    }
+
+    // 만약 이미 Preparing중인 Order가 있다면 false를 리턴한다.
+    private boolean hasPreparingOrder(User user)
+    {
+        List<Order> orders = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PREPARING);
+
+        return !orders.isEmpty();
+    }
+
+    // 해당 Order의 접근 권한이 없다면 Error를, 있으면 그냥 리턴한다.
+    private void checkAccessAuthority(User user, Order order) {
+        if (!user.getId().equals(order.getUser().getId()))
+        {
+            throw new KookminEatException(ErrorCode.ORDER_ACCESS_DENIED);
+        }
+    }
+
     @Transactional
     public OrderResponse makeOrder(String authToken, OrderRequest orderRequest)
     {
         // user.
         User user = userService.getUserFromAuthToken(authToken);
+
+        // 진행중인 주문이 있다면 Error.
+        if(hasPreparingOrder(user))
+        {
+            throw new KookminEatException(ErrorCode.PENDING_ORDER_ALREADY_EXISTS);
+        }
 
         // Order 생성.
         Order order = Order.builder()
@@ -83,16 +113,25 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
-    public OrderResponse getOrder(String authToken, Long orderId)
+    // 권한 필요
+    public OrderResponse cancelOrder(String authToken, Long orderId)
     {
         User user = userService.getUserFromAuthToken(authToken);
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-
+        Order order = findByOrderId(orderId);
+        checkAccessAuthority(user, order);
+        order.setStatus(OrderStatus.CANCELED);
         return OrderResponse.from(order);
     }
 
-    // status가 FINISHED 상태인 것들만 가져온다.
+    // 권한 필요.
+    public OrderResponse getOrder(String authToken, Long orderId)
+    {
+        User user = userService.getUserFromAuthToken(authToken);
+        Order order = findByOrderId(orderId);
+        return OrderResponse.from(order);
+    }
+
+    // user의 order 중 status가 FINISHED 상태인 것들만 가져온다.
     public List<OrderResponse> getFinishedOrders(String authToken)
     {
         User user = userService.getUserFromAuthToken(authToken);
@@ -105,11 +144,13 @@ public class OrderService {
     }
 
     // order를 finished로 만든다.
+    // 권한 필요
     public OrderResponse finishOrder(String authToken, Long orderId)
     {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+        User user = userService.getUserFromAuthToken(authToken);
+        Order order = findByOrderId(orderId);
 
+        checkAccessAuthority(user, order);
         // set order to finished
         order.setStatus(OrderStatus.FINISHED);
         return OrderResponse.from(order);

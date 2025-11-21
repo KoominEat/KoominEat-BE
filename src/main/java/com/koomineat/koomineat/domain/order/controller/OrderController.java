@@ -12,9 +12,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+    private final UserService userService;
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {this.orderService = orderService;}
+    public OrderController(OrderService orderService, UserService userService)
+    {
+        this.userService = userService;
+        this.orderService = orderService;
+    }
 
     // 단일 get
     @GetMapping("/{orderId}")
@@ -23,7 +28,10 @@ public class OrderController {
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken
     )
     {
-        return ApiResponse.success(orderService.getOrder(authToken, orderId));
+        if(userService.authenticateByCookie(authToken))
+            return ApiResponse.success(orderService.getOrder(authToken, orderId));
+        else
+            return ApiResponse.fail("Can't find user", "User가 없거나 인증이 실패했습니다.");
     }
 
 
@@ -155,6 +163,15 @@ response 예시:
     public ApiResponse<OrderResponse> makeOrder(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken, @RequestBody OrderRequest orderRequest)
     {
         return ApiResponse.success(orderService.makeOrder(authToken, orderRequest));
+    }
+
+    @PostMapping("/cancel/{orderId}")
+    public ApiResponse<OrderResponse> cancelOrder(
+            @PathVariable Long orderId,
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken
+    )
+    {
+        return ApiResponse.success(orderService.cancelOrder(authToken, orderId));
     }
 
 }
