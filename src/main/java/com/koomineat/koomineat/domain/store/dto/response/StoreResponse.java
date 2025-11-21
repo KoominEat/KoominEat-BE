@@ -1,14 +1,15 @@
 package com.koomineat.koomineat.domain.store.dto.response;
 
 import com.koomineat.koomineat.domain.store.entity.Store;
+import com.koomineat.koomineat.global.response.BaseImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@SuperBuilder
 @Schema(description = "스토어 정보 응답 DTO")
-public class StoreResponse {
+public class StoreResponse extends BaseImageResponse<StoreResponse> {
 
     private Long storeId;
     private String name;
@@ -22,6 +23,17 @@ public class StoreResponse {
     private Long categoryId;
     private String categoryName;
 
+    private String backgroundImage;
+
+    @Override
+    protected StoreResponse addBaseUrl(String baseUrl) {
+        super.addBaseUrl(baseUrl);
+        if (backgroundImage != null && !backgroundImage.isBlank()) {
+            backgroundImage = baseUrl + backgroundImage;
+        }
+        return this;
+    }
+
     public static StoreResponse from(Store s) {
         return StoreResponse.builder()
                 .storeId(s.getId())
@@ -30,6 +42,12 @@ public class StoreResponse {
                 .locationName(s.getLocation().getName())
                 .categoryId(s.getCategory().getId())
                 .categoryName(s.getCategory().getName())
+                .image(s.getImage())
+                .backgroundImage(s.getBackgroundImage())
                 .build();
+    }
+
+    public static StoreResponse from(Store store, String baseUrl) {
+        return StoreResponse.from(store).addBaseUrl(baseUrl);
     }
 }

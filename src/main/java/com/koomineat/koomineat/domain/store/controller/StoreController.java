@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,8 +90,9 @@ public class StoreController {
     @GetMapping
     public ApiResponse<List<StoreResponse>> getStores(
             @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Long locationId
+            @RequestParam(required = false) Long locationId,
+            HttpServletRequest request
     ) {
-        return ApiResponse.success(storeService.getStores(categoryId, locationId));
+        return ApiResponse.success(storeService.getStores(categoryId, locationId, request));
     }
 }

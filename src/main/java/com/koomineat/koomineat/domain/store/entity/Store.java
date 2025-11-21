@@ -23,4 +23,12 @@ public class Store {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
     private StoreLocation location;
+
+    // 프로필 이미지
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
+    private String image;
+
+    // 배경화면 이미지
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
+    private String backgroundImage;
 }
