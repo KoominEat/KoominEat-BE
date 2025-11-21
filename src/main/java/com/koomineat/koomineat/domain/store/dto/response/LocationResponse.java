@@ -1,5 +1,6 @@
 package com.koomineat.koomineat.domain.store.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.koomineat.koomineat.domain.store.entity.Location;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.Getter;
 public class LocationResponse {
 
     @Schema(description = "위치 ID", example = "3")
+    @JsonProperty("locationId")
     private Long id;
 
     @Schema(description = "건물 이름", example = "예술관")
