@@ -1,12 +1,12 @@
 ------------------------------------------------------------
 -- 1. 카테고리 등록
 ------------------------------------------------------------
-INSERT INTO store_category (name) VALUES
-                                      ('카페'),
-                                      ('햄버거'),
-                                      ('빵'),
-                                      ('분식/식사'),
-                                      ('샐러드/샌드위치');
+INSERT INTO store_category (name, image) VALUES
+                                      ('카페', '/categories/cafe.png'),
+                                      ('햄버거', '/categories/burger.png'),
+                                      ('빵', '/categories/bread.png'),
+                                      ('분식/식사', '/categories/bunsik.png'),
+                                      ('샐러드/샌드위치', '/categories/salad.png');
 
 ------------------------------------------------------------
 -- 2. 스토어 등록  (x,y 제거)
@@ -14,35 +14,35 @@ INSERT INTO store_category (name) VALUES
 ------------------------------------------------------------
 
 -- ===== 카페 =====
-INSERT INTO store(name, location, category_id) VALUES
-                                                   ('카페-K', '본부관', 1),
-                                                   ('카페미르(북악)', '북악관', 1),
-                                                   ('공차', '북악관', 1),
-                                                   ('스무디킹', '법학관', 1),
-                                                   ('Cafe Namu(예술관)', '예술관', 1),
-                                                   ('Cafe Namu(복지관)', '복지관', 1),
-                                                   ('카페미르(공학관)', '공학관', 1),
-                                                   ('할리스커피', '성곡도서관', 1),
-                                                   ('카페(과학관)', '과학관', 1);
+INSERT INTO store(name, location, category_id, image, background_image) VALUES
+                                                   ('카페-K', '본부관', 1, '', ''),
+                                                   ('카페미르(북악)', '북악관', 1, '/stores/mir.png', '/stores/mir-back.jpg'),
+                                                   ('공차', '북악관', 1, '/stores/gong.jpg', '/stores/gong-back.jpg'),
+                                                   ('스무디킹', '법학관', 1, '', ''),
+                                                   ('Cafe Namu(예술관)', '예술관', 1, '', ''),
+                                                   ('Cafe Namu(복지관)', '복지관', 1, '', ''),
+                                                   ('카페미르(공학관)', '공학관', 1, '/stores/mir.png', '/stores/mir-back.jpg'),
+                                                   ('할리스커피', '성곡도서관', 1, '/stores/hollys.jpg', '/stores/hollys-back.webp'),
+                                                   ('카페(과학관)', '과학관', 1, '', '');
 
 -- ===== 햄버거 =====
-INSERT INTO store(name, location, category_id) VALUES
-                                                   ('버거운버거', '복지관', 2),
-                                                   ('맘스터치', '공학관', 2);
+INSERT INTO store(name, location, category_id, image, background_image) VALUES
+                                                   ('버거운버거', '복지관', 2, '', ''),
+                                                   ('맘스터치', '공학관', 2, '/stores/momstouch.jpg', '/stores/momstouch-back.jpg');
 
 -- ===== 빵 =====
-INSERT INTO store(name, location, category_id) VALUES
-    ('플레이스엔', '복지관', 3);
+INSERT INTO store(name, location, category_id, image, background_image) VALUES
+    ('플레이스엔', '복지관', 3, '', '');
 
 -- ===== 분식/식사 =====
-INSERT INTO store(name, location, category_id) VALUES
-                                                   ('K-GIMBOB+', '북악관', 4),
-                                                   ('K-BOB+', '복지관', 4);
+INSERT INTO store(name, location, category_id, image, background_image) VALUES
+                                                   ('K-GIMBOB+', '북악관', 4, '/stores/kgimbob.png', '/stores/kgimbob-back.png'),
+                                                   ('K-BOB+', '복지관', 4, '', '');
 
 -- ===== 샐러드/샌드위치 =====
-INSERT INTO store(name, location, category_id) VALUES
-                                                   ('써브웨이', '북악관', 5),
-                                                   ('샐러디', '복지관', 5);
+INSERT INTO store(name, location, category_id, image, background_image) VALUES
+                                                   ('써브웨이', '북악관', 5, '/stores/subway.jpg', '/stores/subway-back.jpg'),
+                                                   ('샐러디', '복지관', 5, '', '');
 
 
 ------------------------------------------------------------

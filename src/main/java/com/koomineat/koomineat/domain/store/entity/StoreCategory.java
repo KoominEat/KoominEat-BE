@@ -15,4 +15,7 @@ public class StoreCategory {
 
     @Column(nullable = false, unique = true)
     private String name; // 예: 커피, 버거, 한식
+
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
+    private String image;
 }

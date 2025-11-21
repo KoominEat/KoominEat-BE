@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,7 +79,7 @@ public class StoreController {
             )
     })
     @GetMapping
-    public ApiResponse<List<StoreResponse>> getByCategory(@RequestParam Long categoryId) {
-        return ApiResponse.success(storeService.getByCategory(categoryId));
+    public ApiResponse<List<StoreResponse>> getByCategory(@RequestParam Long categoryId, HttpServletRequest request) {
+        return ApiResponse.success(storeService.getByCategory(categoryId, request));
     }
 }
