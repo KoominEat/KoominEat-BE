@@ -2,26 +2,36 @@ package com.koomineat.koomineat.domain.auth.service;
 
 import com.koomineat.koomineat.domain.auth.entity.User;
 import com.koomineat.koomineat.domain.auth.repository.UserRepository;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class UserService {
+    private final Environment env;
 
     private final UserRepository userRepository;
     public static final String COOKIE_NAME = "AUTH_TOKEN";
 
-    public UserService(UserRepository userRepository) {
+    public UserService(Environment env, UserRepository userRepository) {
+        this.env = env;
         this.userRepository = userRepository;
     }
 
+    private boolean isProd() {
+        return List.of(env.getActiveProfiles()).contains("prod");
+    }
+
+
     @Transactional
     public User registerAndIssueCookie(String name, HttpServletResponse response) {
+        boolean prod = isProd();
         // 토큰 랜덤 생성
         String token = UUID.randomUUID().toString();
 
@@ -36,10 +46,10 @@ public class UserService {
         // set cookie. 배포시에 수정해야 함.
         ResponseCookie cookie = ResponseCookie.from(COOKIE_NAME, token)
                 .httpOnly(true)
-                .secure(false)
+                .secure(prod)
                 .path("/")
                 .maxAge(Duration.ofDays(30))
-                .sameSite("Lax")
+                .sameSite(prod ? "None" : "Lax")
                 .build();
 
         response.addHeader("Set-Cookie", cookie.toString());
