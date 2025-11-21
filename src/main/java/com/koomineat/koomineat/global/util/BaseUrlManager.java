@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class BaseUrlManager {
 
-    public static final String basicImagePath = "/cat";
+    public static final String basicImagePath = "/cat.png";
 
     public static String getBaseUrl(HttpServletRequest request)
     {
