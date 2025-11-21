@@ -2,6 +2,7 @@ package com.koomineat.koomineat.domain.store.dto.response;
 
 import com.koomineat.koomineat.domain.store.entity.Store;
 import com.koomineat.koomineat.global.response.BaseImageResponse;
+import com.koomineat.koomineat.global.util.BaseUrlManager;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -30,6 +31,10 @@ public class StoreResponse extends BaseImageResponse<StoreResponse> {
         super.addBaseUrl(baseUrl);
         if (backgroundImage != null && !backgroundImage.isBlank()) {
             backgroundImage = baseUrl + backgroundImage;
+        }
+        else
+        {
+            backgroundImage = baseUrl + BaseUrlManager.basicImagePath;
         }
         return this;
     }
