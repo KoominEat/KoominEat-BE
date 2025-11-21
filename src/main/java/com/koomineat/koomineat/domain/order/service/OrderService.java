@@ -70,6 +70,8 @@ public class OrderService {
         }
         else if(order.getOrderType() == OrderType.DELIVERY)
         {
+            // delivery 저장 전 먼저 order save.
+            order = orderRepository.save(order);
             deliveryService.createDelivery(
                     order,
                     orderRequest.getDestination(),   // 전달 위치
@@ -80,7 +82,6 @@ public class OrderService {
         // user list에 order를 추가.
         user.addOrder(order);
         order = orderRepository.save(order);
-        System.out.println(user.getOrders());
 
         return OrderResponse.from(order);
     }
