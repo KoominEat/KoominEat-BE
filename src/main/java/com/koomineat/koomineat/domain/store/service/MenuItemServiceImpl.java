@@ -5,6 +5,8 @@ import com.koomineat.koomineat.domain.store.entity.MenuItem;
 import com.koomineat.koomineat.domain.store.repository.MenuItemRepository;
 import com.koomineat.koomineat.global.exception.ErrorCode;
 import com.koomineat.koomineat.global.exception.KookminEatException;
+import com.koomineat.koomineat.global.util.BaseUrlManager;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,10 @@ public class MenuItemServiceImpl implements MenuItemService {
     private final MenuItemRepository menuItemRepository;
 
     @Override
-    public List<MenuItemResponse> getMenuItems(Long storeId) {
+    public List<MenuItemResponse> getMenuItems(Long storeId, HttpServletRequest request) {
         return menuItemRepository.findByStoreId(storeId)
                 .stream()
-                .map(MenuItemResponse::from)
+                .map(item -> MenuItemResponse.from(item, BaseUrlManager.getBaseUrl(request)))
                 .toList();
     }
 

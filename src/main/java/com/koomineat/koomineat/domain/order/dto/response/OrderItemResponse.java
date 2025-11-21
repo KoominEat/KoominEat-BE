@@ -20,4 +20,11 @@ public class OrderItemResponse {
                 .quantity(o.getQuantity())
                 .build();
     }
+
+    public static OrderItemResponse from(OrderItem o, String baseUrl) {
+        return OrderItemResponse.builder()
+                .menuItemResponse(MenuItemResponse.from(o.getMenuItem(),baseUrl))
+                .quantity(o.getQuantity())
+                .build();
+    }
 }

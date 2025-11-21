@@ -5,6 +5,7 @@ import com.koomineat.koomineat.domain.order.dto.request.OrderRequest;
 import com.koomineat.koomineat.domain.order.dto.response.OrderResponse;
 import com.koomineat.koomineat.domain.order.service.OrderService;
 import com.koomineat.koomineat.global.response.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +26,12 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ApiResponse<OrderResponse> getOrder(
             @PathVariable Long orderId,
-            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
+            HttpServletRequest request
     )
     {
         if(userService.authenticateByCookie(authToken))
-            return ApiResponse.success(orderService.getOrder(authToken, orderId));
+            return ApiResponse.success(orderService.getOrder(authToken, orderId, request));
         else
             return ApiResponse.fail("Can't find user", "User가 없거나 인증이 실패했습니다.");
     }
@@ -107,19 +109,23 @@ public class OrderController {
 }
      */
     @GetMapping
-    public ApiResponse<List<OrderResponse>> getFinishedOrders(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken)
+    public ApiResponse<List<OrderResponse>> getFinishedOrders(
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
+            HttpServletRequest request
+    )
     {
-        return ApiResponse.success(orderService.getOrders(authToken));
+        return ApiResponse.success(orderService.getOrders(authToken, request));
     }
 
     // 해당 Order를 완료 상태로 만든다. (필요 없을수도 있음.)
     @PatchMapping("/finish/{orderId}")
     public ApiResponse<OrderResponse> finishOrder(
             @PathVariable Long orderId,
-            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
+            HttpServletRequest request
     )
     {
-        return ApiResponse.success(orderService.finishOrder(authToken, orderId));
+        return ApiResponse.success(orderService.finishOrder(authToken, orderId, request));
     }
 
     /*
@@ -160,18 +166,23 @@ response 예시:
 */
     // 주문 진행.
     @PostMapping
-    public ApiResponse<OrderResponse> makeOrder(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken, @RequestBody OrderRequest orderRequest)
+    public ApiResponse<OrderResponse> makeOrder(
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
+            @RequestBody OrderRequest orderRequest,
+            HttpServletRequest request
+    )
     {
-        return ApiResponse.success(orderService.makeOrder(authToken, orderRequest));
+        return ApiResponse.success(orderService.makeOrder(authToken, orderRequest, request));
     }
 
     @PostMapping("/cancel/{orderId}")
     public ApiResponse<OrderResponse> cancelOrder(
             @PathVariable Long orderId,
-            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken
+            @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
+            HttpServletRequest request
     )
     {
-        return ApiResponse.success(orderService.cancelOrder(authToken, orderId));
+        return ApiResponse.success(orderService.cancelOrder(authToken, orderId, request));
     }
 
 }

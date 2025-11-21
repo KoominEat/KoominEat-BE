@@ -22,4 +22,7 @@ public class MenuItem {
 
     @Column(nullable = false)
     private int price;
+
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
+    private String image;
 }

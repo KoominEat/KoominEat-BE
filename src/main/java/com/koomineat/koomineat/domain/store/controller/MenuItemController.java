@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,8 +74,9 @@ public class MenuItemController {
     })
     @GetMapping
     public ApiResponse<List<MenuItemResponse>> getMenuItems(
-            @PathVariable Long storeId
+            @PathVariable Long storeId,
+            HttpServletRequest request
     ) {
-        return ApiResponse.success(menuItemService.getMenuItems(storeId));
+        return ApiResponse.success(menuItemService.getMenuItems(storeId, request));
     }
 }

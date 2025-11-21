@@ -50,39 +50,41 @@ INSERT INTO store(name, location, category_id) VALUES
 ------------------------------------------------------------
 
 -- ===== 카페-K =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 1),
-                                                 ('카페모카', 5700, 1),
-                                                 ('바닐라 라떼', 6100, 1),
-                                                 ('카페 라떼', 5200, 1),
-                                                 ('카푸치노', 5200, 1),
-                                                 ('아메리카노', 4500, 1),
-                                                 ('디카페인 아메리카노', 4900, 1),
-                                                 ('에스프레소', 4000, 1);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 1, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 1, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 1, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 1, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 1, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 1, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 1, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 1, '/menus/8esp.png');
+
 
 -- ===== 카페미르(북악) =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 2),
-                                                 ('카페모카', 5700, 2),
-                                                 ('바닐라 라떼', 6100, 2),
-                                                 ('카페 라떼', 5200, 2),
-                                                 ('카푸치노', 5200, 2),
-                                                 ('아메리카노', 4500, 2),
-                                                 ('디카페인 아메리카노', 4900, 2),
-                                                 ('에스프레소', 4000, 2);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 2, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 2, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 2, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 2, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 2, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 2, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 2, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 2, '/menus/8esp.png');
 
 -- ===== 공차 =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('블랙 밀크티', 4000, 3),
-                                                 ('얼그레이 밀크티', 4000, 3),
-                                                 ('타로 밀크티', 4000, 3),
-                                                 ('우롱티', 3500, 3),
-                                                 ('망고 요구르트', 5000, 3),
-                                                 ('딸키 쿠키 스무디', 5300, 3),
-                                                 ('청포도 스무디', 4800, 3),
-                                                 ('제주 그린 밀크티', 4700, 3);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('블랙 밀크티', 4000, 3, '/menus/17bmt.png'),
+                                                ('얼그레이 밀크티', 4000, 3, '/menus/18amt.png'),
+                                                ('타로 밀크티', 4000, 3, '/menus/19tmt.png'),
+                                                ('우롱티', 3500, 3, '/menus/20urt.png'),
+                                                ('망고 요구르트', 5000, 3, '/menus/21myr.png'),
+                                                ('딸키 쿠키 스무디', 5300, 3, '/menus/22dks.png'),
+                                                ('청포도 스무디', 4800, 3, '/menus/23cps.png'),
+                                                ('제주 그린 밀크티', 4700, 3, '/menus/24jgmt.png');
 
 -- ===== 스무디킹 =====
+-- 이미지 없음.
 INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('엔젤 푸드', 5500, 4),
                                                  ('스트로베리 익스트림', 5500, 4),
@@ -94,59 +96,59 @@ INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('그릭요거트 스트로베리 블루베리', 5500, 4);
 
 -- ===== Cafe Namu(예술관) =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 5),
-                                                 ('카페모카', 5700, 5),
-                                                 ('바닐라 라떼', 6100, 5),
-                                                 ('카페 라떼', 5200, 5),
-                                                 ('카푸치노', 5200, 5),
-                                                 ('아메리카노', 4500, 5),
-                                                 ('디카페인 아메리카노', 4900, 5),
-                                                 ('에스프레소', 4000, 5);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 5, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 5, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 5, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 5, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 5, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 5, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 5, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 5, '/menus/8esp.png');
 
 -- ===== Cafe Namu(복지관) =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 6),
-                                                 ('카페모카', 5700, 6),
-                                                 ('바닐라 라떼', 6100, 6),
-                                                 ('카페 라떼', 5200, 6),
-                                                 ('카푸치노', 5200, 6),
-                                                 ('아메리카노', 4500, 6),
-                                                 ('디카페인 아메리카노', 4900, 6),
-                                                 ('에스프레소', 4000, 6);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 6, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 6, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 6, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 6, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 6, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 6, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 6, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 6, '/menus/8esp.png');
 
 -- ===== 카페미르(공학관) =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 7),
-                                                 ('카페모카', 5700, 7),
-                                                 ('바닐라 라떼', 6100, 7),
-                                                 ('카페 라떼', 5200, 7),
-                                                 ('카푸치노', 5200, 7),
-                                                 ('아메리카노', 4500, 7),
-                                                 ('디카페인 아메리카노', 4900, 7),
-                                                 ('에스프레소', 4000, 7);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 7, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 7, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 7, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 7, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 7, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 7, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 7, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 7, '/menus/8esp.png');
 
 -- ===== 할리스커피 =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 8),
-                                                 ('카페모카', 5700, 8),
-                                                 ('바닐라 라떼', 6100, 8),
-                                                 ('카페 라떼', 5200, 8),
-                                                 ('카푸치노', 5200, 8),
-                                                 ('아메리카노', 4500, 8),
-                                                 ('디카페인 아메리카노', 4900, 8),
-                                                 ('에스프레소', 4000, 8);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 8, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 8, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 8, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 8, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 8, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 8, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 8, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 8, '/menus/8esp.png');
 
 -- ===== 카페(과학관) =====
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('카라멜 마키야또', 6100, 9),
-                                                 ('카페모카', 5700, 9),
-                                                 ('바닐라 라떼', 6100, 9),
-                                                 ('카페 라떼', 5200, 9),
-                                                 ('카푸치노', 5200, 9),
-                                                 ('아메리카노', 4500, 9),
-                                                 ('디카페인 아메리카노', 4900, 9),
-                                                 ('에스프레소', 4000, 9);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('카라멜 마키야또', 6100, 9, '/menus/1cmd.png'),
+                                                ('카페모카', 5700, 9, '/menus/2cmk.png'),
+                                                ('바닐라 라떼', 6100, 9, '/menus/3bld.png'),
+                                                ('카페 라떼', 5200, 9, '/menus/4ld.png'),
+                                                ('카푸치노', 5200, 9, '/menus/5cpq.png'),
+                                                ('아메리카노', 4500, 9, '/menus/6ame.png'),
+                                                ('디카페인 아메리카노', 4900, 9, '/menus/7decame.png'),
+                                                ('에스프레소', 4000, 9, '/menus/8esp.png');
 
 
 ------------------------------------------------------------
@@ -154,6 +156,7 @@ INSERT INTO menu_item(name, price, store_id) VALUES
 ------------------------------------------------------------
 
 -- 버거운버거
+-- 이미지 없음.
 INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('버거운 치킨버거', 4600, 10),
                                                  ('갈릭마요 치킨버거', 5500, 10),
@@ -165,20 +168,22 @@ INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('스노우 치킨버거', 5000, 10);
 
 -- 맘스터치
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('인크레더블버거', 4700, 11),
-                                                 ('치즈베이컨버거', 4300, 11),
-                                                 ('딥치즈버거', 3800, 11),
-                                                 ('화이트갈릭버거', 3900, 11),
-                                                 ('휠렛버거', 3400, 11),
-                                                 ('햄치즈 휠렛버거', 3700, 11),
-                                                 ('싸이버거', 3200, 11),
-                                                 ('불싸이버거', 3400, 11);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('인크레더블버거', 4700, 11, '/menus/81incre.png'),
+                                                ('새우불고기버거', 4500, 11, '/menus/82sub.png'),
+                                                ('딥치즈버거', 3800, 11, '/menus/83deep.png'),
+                                                ('화이트갈릭버거', 3900, 11, '/menus/84white.png'),
+                                                ('휠렛버거', 3400, 11, '/menus/85whilet.png'),
+                                                ('싸이플렉스버거', 11000, 11, '/menus/86flec.png'),
+                                                ('싸이버거', 3200, 11, '/menus/87psy.png'),
+                                                ('불싸이버거', 3400, 11, '/menus/88firepsy.png');
+
 
 
 ------------------------------------------------------------
 -- ===== 빵 (플레이스엔) =====
 ------------------------------------------------------------
+-- 이미지 없음.
 INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('연유바게트', 3000, 12),
                                                  ('감자바게트', 4000, 12),
@@ -195,17 +200,19 @@ INSERT INTO menu_item(name, price, store_id) VALUES
 ------------------------------------------------------------
 
 -- K-GIMBOB+
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('국민김밥', 3300, 13),
-                                                 ('치즈김밥', 3900, 13),
-                                                 ('참치김밥', 4000, 13),
-                                                 ('크래미김밥', 4300, 13),
-                                                 ('국민우동', 5000, 13),
-                                                 ('떡볶이', 3500, 13),
-                                                 ('순대', 3500, 13),
-                                                 ('소떡소떡', 3000, 13);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('국민김밥', 3300, 13, '/menus/97kimbob.png'),
+                                                ('치즈김밥', 3900, 13, '/menus/98cheesekimbob.png'),
+                                                ('참치김밥', 4000, 13, '/menus/99chamkimbob.png'),
+                                                ('크래미김밥', 4300, 13, '/menus/100crekimbob.png'),
+                                                ('국민우동', 5000, 13, '/menus/101wu.png'),
+                                                ('떡볶이', 3500, 13, '/menus/102dbg.png'),
+                                                ('국물떡볶이', 3500, 13, '/menus/103gookdbg.png'),
+                                                ('짜장국물떡볶이', 3000, 13, '/menus/104jadbg.png');
+
 
 -- K-BOB+
+-- 이미지 없음.
 INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('통스팸김피덮밥', 6500, 14),
                                                  ('핵불닭덮밥', 7500, 14),
@@ -222,17 +229,19 @@ INSERT INTO menu_item(name, price, store_id) VALUES
 ------------------------------------------------------------
 
 -- 써브웨이
-INSERT INTO menu_item(name, price, store_id) VALUES
-                                                 ('에그마요', 4300, 15),
-                                                 ('햄', 4700, 15),
-                                                 ('치킨 데리야끼', 5400, 15),
-                                                 ('터키 베이컨', 5600, 15),
-                                                 ('스파이시 이탈리안', 5600, 15),
-                                                 ('비엘티', 5300, 15),
-                                                 ('폴드포크', 5900, 15),
-                                                 ('이탈리안 비엘티', 5500, 15);
+INSERT INTO menu_item(name, price, store_id, image) VALUES
+                                                ('에그마요', 4300, 15, '/menus/113eggmayo.png'),
+                                                ('햄', 4700, 15, '/menus/114ham.png'),
+                                                ('치킨 데리야끼', 5400, 15, '/menus/115chicken.png'),
+                                                ('안창비프', 6400, 15, '/menus/116anchang.png'),
+                                                ('스파이시 이탈리안', 5600, 15, '/menus/117spicy_italian.png'),
+                                                ('비엘티', 5300, 15, '/menus/118blt.png'),
+                                                ('폴드포크', 5900, 15, '/menus/119ppk.png'),
+                                                ('튜나', 5500, 15, '/menus/120tuna.png');
+
 
 -- 샐러디
+-- 이미지 없음.
 INSERT INTO menu_item(name, price, store_id) VALUES
                                                  ('시저치킨 샐러디', 5100, 16),
                                                  ('멕시칸 샐러디', 5300, 16),

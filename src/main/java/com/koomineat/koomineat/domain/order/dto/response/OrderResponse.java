@@ -48,4 +48,21 @@ public class OrderResponse {
                 .build();
     }
 
+    public static OrderResponse from(Order o, String baseUrl) {
+        List<OrderItemResponse> orderItemResponses =  o.getOrderItems()
+                .stream()
+                .map(item -> OrderItemResponse.from(item, baseUrl))
+                .toList();
+
+        return OrderResponse.builder()
+                .orderId(o.getId())
+                .status(o.getStatus())
+                .totalPrice(o.getTotalPrice())
+                .orderItemResponses(orderItemResponses)
+                .orderType(o.getOrderType())
+                .storeResponse(StoreResponse.from(o.getStore()))
+                .userResponse(UserResponse.from(o.getUser()))
+                .build();
+    }
+
 }
