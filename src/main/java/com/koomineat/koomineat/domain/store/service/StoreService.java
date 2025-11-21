@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface StoreService {
     List<StoreResponse> getStores(Long categoryId, Long locationId, HttpServletRequest request);
+    StoreResponse getStore(Long storeId, HttpServletRequest request);
     Store getStoreById(Long storeId);
 }

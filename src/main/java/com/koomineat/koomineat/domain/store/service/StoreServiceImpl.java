@@ -45,4 +45,10 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findById(storeId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.STORE_NOT_FOUND));
     }
+
+    @Override
+    public StoreResponse getStore(Long storeId, HttpServletRequest request)
+    {
+        return StoreResponse.from(getStoreById(storeId), BaseUrlManager.getBaseUrl(request));
+    }
 }

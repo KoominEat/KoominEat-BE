@@ -84,4 +84,12 @@ public class StoreController {
     ) {
         return ApiResponse.success(storeService.getStores(categoryId, locationId, request));
     }
+
+    @GetMapping("/{storeId}")
+    public ApiResponse<StoreResponse> getStore(
+            @PathVariable Long storeId,
+            HttpServletRequest request
+    ) {
+        return ApiResponse.success(storeService.getStore(storeId, request));
+    }
 }
