@@ -16,8 +16,7 @@ public class OrderController {
     private final UserService userService;
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService, UserService userService)
-    {
+    public OrderController(OrderService orderService, UserService userService) {
         this.userService = userService;
         this.orderService = orderService;
     }
@@ -28,8 +27,7 @@ public class OrderController {
             @PathVariable Long orderId,
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
             HttpServletRequest request
-    )
-    {
+    ) {
         if(userService.authenticateByCookie(authToken))
             return ApiResponse.success(orderService.getOrder(authToken, orderId, request));
         else
@@ -112,8 +110,7 @@ public class OrderController {
     public ApiResponse<List<OrderResponse>> getFinishedOrders(
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
             HttpServletRequest request
-    )
-    {
+    ) {
         return ApiResponse.success(orderService.getOrders(authToken, request));
     }
 
@@ -123,8 +120,7 @@ public class OrderController {
             @PathVariable Long orderId,
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
             HttpServletRequest request
-    )
-    {
+    ) {
         return ApiResponse.success(orderService.finishOrder(authToken, orderId, request));
     }
 
@@ -170,8 +166,7 @@ response 예시:
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
             @RequestBody OrderRequest orderRequest,
             HttpServletRequest request
-    )
-    {
+    ) {
         return ApiResponse.success(orderService.makeOrder(authToken, orderRequest, request));
     }
 
@@ -180,8 +175,7 @@ response 예시:
             @PathVariable Long orderId,
             @CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken,
             HttpServletRequest request
-    )
-    {
+    ) {
         return ApiResponse.success(orderService.cancelOrder(authToken, orderId, request));
     }
 

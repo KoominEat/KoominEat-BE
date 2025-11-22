@@ -35,8 +35,7 @@ public class AuthController {
 
     // 디버그용. user를 잘 찾나 확인.
     @GetMapping("/getUser")
-    public ResponseEntity<?> getUser(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken)
-    {
+    public ResponseEntity<?> getUser(@CookieValue(name = UserService.COOKIE_NAME, required = false) String authToken) {
         User user = userService.getUserFromAuthToken(authToken);
         return ResponseEntity
                 .status(200)

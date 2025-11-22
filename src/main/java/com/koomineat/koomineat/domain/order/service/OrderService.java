@@ -37,15 +37,13 @@ public class OrderService {
     private final DeliveryService deliveryService;
 
     // order를 Id로 찾는다. (에러 처리 적용)
-    private Order findByOrderId(Long orderId)
-    {
+    private Order findByOrderId(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.ORDER_NOT_FOUND));
     }
 
     // 만약 이미 Preparing중인 Order가 있다면 false를 리턴한다.
-    private boolean hasPreparingOrder(User user)
-    {
+    private boolean hasPreparingOrder(User user) {
         List<Order> orders = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PREPARING);
 
         return !orders.isEmpty();
@@ -60,15 +58,13 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse makeOrder(String authToken, OrderRequest orderRequest, HttpServletRequest request)
-    {
+    public OrderResponse makeOrder(String authToken, OrderRequest orderRequest, HttpServletRequest request) {
 
         // user.
         User user = userService.getUserFromAuthToken(authToken);
 
         // 진행중인 주문이 있다면 Error.
-        if(hasPreparingOrder(user))
-        {
+        if(hasPreparingOrder(user)) {
             throw new KookminEatException(ErrorCode.PENDING_ORDER_ALREADY_EXISTS);
         }
 
@@ -80,8 +76,7 @@ public class OrderService {
                 .store(storeService.getStoreById(orderRequest.getStoreId()))
                 .build();
 
-        for(OrderItemRequest menu : orderRequest.getMenus())
-        {
+        for(OrderItemRequest menu : orderRequest.getMenus()) {
             MenuItem menuItem = menuItemService.getMenuItemById(menu.getMenuItemId());
 
             // orderItem 생성.
@@ -94,12 +89,10 @@ public class OrderService {
         }
 
         // 만약 OrderType이 Pickup이라면 바로 Finish.
-        if(order.getOrderType() == OrderType.PICKUP)
-        {
+        if(order.getOrderType() == OrderType.PICKUP) {
             order.finish();
         }
-        else if(order.getOrderType() == OrderType.DELIVERY)
-        {
+        else if(order.getOrderType() == OrderType.DELIVERY) {
             // delivery 저장 전 먼저 order save.
             order = orderRepository.save(order);
             deliveryService.createDelivery(
@@ -117,8 +110,7 @@ public class OrderService {
     }
 
     // 권한 필요
-    public OrderResponse cancelOrder(String authToken, Long orderId, HttpServletRequest request)
-    {
+    public OrderResponse cancelOrder(String authToken, Long orderId, HttpServletRequest request) {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
         checkAccessAuthority(user, order);
@@ -127,8 +119,7 @@ public class OrderService {
     }
 
     // 권한 필요.
-    public OrderResponse getOrder(String authToken, Long orderId, HttpServletRequest request)
-    {
+    public OrderResponse getOrder(String authToken, Long orderId, HttpServletRequest request) {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
         return OrderResponse.from(order, BaseUrlManager.getBaseUrl(request));
@@ -136,8 +127,7 @@ public class OrderService {
 
     // user의 order 중 status가 FINISHED 상태인 것들만 가져온다.
     // 수정: preparing과 finished만.
-    public List<OrderResponse> getOrders(String authToken, HttpServletRequest request)
-    {
+    public List<OrderResponse> getOrders(String authToken, HttpServletRequest request) {
         User user = userService.getUserFromAuthToken(authToken);
         List<Order> orders =
                 orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PREPARING);
@@ -157,8 +147,7 @@ public class OrderService {
 
     // order를 finished로 만든다.
     // 권한 필요
-    public OrderResponse finishOrder(String authToken, Long orderId, HttpServletRequest request)
-    {
+    public OrderResponse finishOrder(String authToken, Long orderId, HttpServletRequest request) {
         User user = userService.getUserFromAuthToken(authToken);
         Order order = findByOrderId(orderId);
 

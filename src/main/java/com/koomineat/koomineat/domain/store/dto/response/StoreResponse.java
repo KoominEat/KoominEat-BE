@@ -32,8 +32,7 @@ public class StoreResponse extends BaseImageResponse<StoreResponse> {
         if (backgroundImage != null && !backgroundImage.isBlank()) {
             backgroundImage = baseUrl + backgroundImage;
         }
-        else
-        {
+        else {
             backgroundImage = baseUrl + BaseUrlManager.basicImagePath;
         }
         return this;

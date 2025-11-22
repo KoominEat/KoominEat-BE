@@ -60,8 +60,7 @@ public class Order {
     }
 
     // order 끝내기
-    public void finish()
-    {
+    public void finish() {
         this.status = OrderStatus.FINISHED;
         this.endedAt = LocalDateTime.now();
     }

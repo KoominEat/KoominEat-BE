@@ -28,8 +28,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 
     // menuItem 객체를 id로 가져옴.
     @Override
-    public MenuItem getMenuItemById(Long menuItemId)
-    {
+    public MenuItem getMenuItemById(Long menuItemId) {
         return menuItemRepository.findById(menuItemId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.MENUITEM_NOT_FOUND));
     }

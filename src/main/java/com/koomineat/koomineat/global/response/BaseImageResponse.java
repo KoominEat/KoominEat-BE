@@ -15,10 +15,8 @@ public abstract class BaseImageResponse<T extends BaseImageResponse<T>> {
     protected String image;
 
     @SuppressWarnings("unchecked")
-    protected T addBaseUrl(String baseUrl)
-    {
-        if(image != null && !image.isBlank())
-        {
+    protected T addBaseUrl(String baseUrl) {
+        if(image != null && !image.isBlank()) {
             image = baseUrl + image;
         }
         else{

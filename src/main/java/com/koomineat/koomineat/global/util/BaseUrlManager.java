@@ -6,8 +6,7 @@ public class BaseUrlManager {
 
     public static final String basicImagePath = "/cat.png";
 
-    public static String getBaseUrl(HttpServletRequest request)
-    {
+    public static String getBaseUrl(HttpServletRequest request) {
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 
         return baseUrl;

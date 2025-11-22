@@ -64,8 +64,7 @@ public class UserService {
     }
     
     // authToken으로 user를 가져온다.
-    public User getUserFromAuthToken(String authToken)
-    {
+    public User getUserFromAuthToken(String authToken) {
         return userRepository.findByAuthToken(authToken).orElseThrow(() -> new KookminEatException(ErrorCode.INVALID_AUTH_TOKEN));
     }
 

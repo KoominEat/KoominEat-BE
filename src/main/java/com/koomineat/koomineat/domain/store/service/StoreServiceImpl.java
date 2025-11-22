@@ -47,8 +47,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreResponse getStore(Long storeId, HttpServletRequest request)
-    {
+    public StoreResponse getStore(Long storeId, HttpServletRequest request) {
         return StoreResponse.from(getStoreById(storeId), BaseUrlManager.getBaseUrl(request));
     }
 }

@@ -40,8 +40,7 @@ public class Delivery {
         this.status = status;
     }
 
-    public void finish()
-    {
+    public void finish() {
         this.status = DeliveryStatus.FINISHED;
         this.getOrder().finish();
     }
