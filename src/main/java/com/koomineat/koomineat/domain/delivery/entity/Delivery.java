@@ -40,6 +40,12 @@ public class Delivery {
         this.status = status;
     }
 
+    public void finish()
+    {
+        this.status = DeliveryStatus.FINISHED;
+        this.getOrder().finish();
+    }
+
     public void updateDeliveryUser(User user) {
         this.deliveryUser = user;
     }

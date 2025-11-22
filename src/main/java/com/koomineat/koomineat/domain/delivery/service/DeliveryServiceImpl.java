@@ -69,16 +69,18 @@ public class DeliveryServiceImpl implements DeliveryService {
         }
 
         // 수락 가능 시간 초과 검사
-        if (order.getCreatedAt().plusMinutes(DELIVERY_TIMEOUT_MINUTES).isBefore(LocalDateTime.now())) {
-            delivery.updateStatus(DeliveryStatus.CANCELED);
-            order.updateOrderType(OrderType.PICKUP);
-            return delivery;
-        }
+//        if (order.getCreatedAt().plusMinutes(DELIVERY_TIMEOUT_MINUTES).isBefore(LocalDateTime.now())) {
+//            delivery.updateStatus(DeliveryStatus.CANCELED);
+//            order.updateOrderType(OrderType.PICKUP);
+//            return delivery;
+//        }
 
         // 정상 수락
         delivery.updateDeliveryUser(user);
         delivery.updateStatus(DeliveryStatus.DELIVERING);
 
+        // 일단 바로 finish.
+        delivery.finish();
         return delivery;
     }
 
@@ -89,15 +91,13 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new KookminEatException(ErrorCode.DELIVERY_NOT_FOUND));
 
-        if (delivery.getStatus() == DeliveryStatus.CANCELED)
-            throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_CANCELED);
+//        if (delivery.getStatus() == DeliveryStatus.CANCELED)
+//            throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_CANCELED);
+//
+//        if (delivery.getStatus() == DeliveryStatus.FINISHED)
+//            throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_FINISHED);
 
-        if (delivery.getStatus() == DeliveryStatus.FINISHED)
-            throw new KookminEatException(ErrorCode.DELIVERY_ALREADY_FINISHED);
-
-        delivery.updateStatus(DeliveryStatus.FINISHED);
-
-        delivery.getOrder().setStatus(OrderStatus.FINISHED);
+        delivery.finish();
 
         return delivery;
     }
