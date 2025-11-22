@@ -27,9 +27,10 @@ public class Delivery {
     @Column(nullable = false)
     private DeliveryStatus status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String destination;
 
+    @Column(nullable = true)
     private String message;
 
     @Column(nullable = true)
