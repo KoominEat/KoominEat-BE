@@ -26,6 +26,18 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+# custom
+src/main/resources/application.yml
+src/main/resources/application-dev.yml
+src/main/resources/application-prod.yml
+
+# src/main/resources/static/cat.png
+
+# src/main/resources/static/menus/*
+# src/main/resources/static/categories/*
+# src/main/resources/static/stores/*
+
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
